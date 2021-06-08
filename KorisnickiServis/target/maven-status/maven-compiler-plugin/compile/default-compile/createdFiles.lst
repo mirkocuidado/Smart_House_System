@@ -1,0 +1,8 @@
+entities\Pesma.class
+util\ElemForListOfSongs.class
+util\PorukaZaPesmu.class
+endpoints\PesmeEndpoint.class
+entities\Istorija.class
+com\mycompany\korisnickiservis\JAXRSConfiguration.class
+entities\User.class
+com\mycompany\korisnickiservis\resources\JavaEE8Resource.class
