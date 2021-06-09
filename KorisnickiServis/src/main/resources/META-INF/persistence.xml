@@ -7,6 +7,7 @@
     <class>entities.Pesma</class>
     <class>entities.Istorija</class>
     <class>entities.User</class>
+    <class>entities.Alarm</class>
     <exclude-unlisted-classes>false</exclude-unlisted-classes>
     <properties/>
   </persistence-unit>

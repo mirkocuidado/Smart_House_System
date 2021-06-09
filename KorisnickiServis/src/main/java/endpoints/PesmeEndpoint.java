@@ -5,12 +5,7 @@
  */
 package endpoints;
 
-import entities.Pesma;
-import java.awt.Desktop;
 import java.io.IOException;
-import java.net.URI;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -23,12 +18,10 @@ import javax.jms.ObjectMessage;
 import javax.jms.Queue;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
-import javax.persistence.TypedQuery;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.core.Response;
-import util.ElemForListOfSongs;
 import util.PorukaZaPesmu;
 
 /**

@@ -58,12 +58,37 @@ public class Main {
         return "";
     }
     
+    private static String checkInsertedTime() {
+        try {
+            BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+            
+            String vreme = "";
+            
+            while(true) {
+                System.out.println("Unesite vreme u formatu dd-MM-yyyyHH:mm.");
+                vreme = reader.readLine();
+                
+                if(!vreme.matches("\\d{2}-\\d{2}-\\d{4}\\d{2}:\\d{2}")) {
+                    System.out.println("Neodgovarajuci format za vreme! Pazi da HH treba da bude spojeno sa yyyy!");
+                    break;
+                }
+                
+                return vreme;
+            }
+            
+        } catch (IOException ex) {
+            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return "";
+    }
+    
     public static void main(String [] args) {
         try {
             Scanner sc= new Scanner(System.in);
             
             boolean loop = true;
-
+            boolean doThis = true;
+            
             int choice;
             
             HttpRequest request = null;
@@ -72,10 +97,13 @@ public class Main {
             String username = successfulLogIn();
             
             while(loop) {
+                doThis = true;
                 System.out.println("Unesite broj za izvrsavanje komande: \n"
                         + "1) Izlistajte sve Vase pesme. \n"
                         + "2) Unesite ID pesme koju zelite da pustite. \n"
-                        + "3) Izlistajte istoriju pustanja pesama. \n");
+                        + "3) Izlistajte istoriju pustanja pesama. \n"
+                        + "4) Navijte alarm u zeljeno vreme i za zeljeni zvuk. \n"
+                );
 
                 choice = sc.nextInt();
 
@@ -96,6 +124,19 @@ public class Main {
                         request = HttpRequest.newBuilder(new URI("http://localhost:8080/KorisnickiServis/smart/pesme/istorija/"+username)).GET().build();
                         break;
                     }
+                    
+                    case 4: {
+                        String vreme = checkInsertedTime();
+                        if(vreme.length() == 0) {
+                            doThis = false;
+                            break;
+                        }
+                        System.out.println("Unesite ID zeljene pesme.");
+                        int idPesme = sc.nextInt();
+                        
+                        request = HttpRequest.newBuilder(new URI("http://localhost:8080/KorisnickiServis/smart/alarm/navij/"+vreme+"/"+idPesme)).GET().build();
+                        break;
+                    }
 
                     default: {
                         loop = false;
@@ -103,14 +144,17 @@ public class Main {
                     }
                 }
                 
-                response = HttpClient.newHttpClient().send(request, HttpResponse.BodyHandlers.ofString());
-                        
-                if(response.statusCode() == 200) System.out.println(response.body());
-                else System.err.println(response.body());
+                if(doThis) {
+                    response = HttpClient.newHttpClient().send(request, HttpResponse.BodyHandlers.ofString());
+
+                    if(response.statusCode() == 200) System.out.println(response.body());
+                    else System.err.println(response.body());
+                }
             }
         }
         catch(Exception e) {
             System.out.println("MAIN EXCEPTION -> Korisnicki Uredjaj");
+            System.err.print(e);
         }
     }
 }

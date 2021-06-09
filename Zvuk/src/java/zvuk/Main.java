@@ -93,7 +93,10 @@ public class Main {
                         i.setNaziv(pesmaWithThisID.getNaziv());
                         i.setUsername(username);
                         i.setDate(new Date());
+                        
+                        em.getTransaction().begin();
                         em.persist(i);
+                        em.getTransaction().commit();
                         
                         PorukaZaPesmu pzp2 = new PorukaZaPesmu(idPesme, pesmaWithThisID.getUrl(), 2);
 
