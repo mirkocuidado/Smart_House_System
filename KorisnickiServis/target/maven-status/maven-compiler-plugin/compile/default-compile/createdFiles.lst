@@ -2,7 +2,10 @@ entities\Pesma.class
 util\ElemForListOfSongs.class
 util\PorukaZaPesmu.class
 endpoints\PesmeEndpoint.class
+endpoints\AlarmEndpoint.class
 entities\Istorija.class
+util\PorukaZaAlarm.class
 com\mycompany\korisnickiservis\JAXRSConfiguration.class
 entities\User.class
 com\mycompany\korisnickiservis\resources\JavaEE8Resource.class
+entities\Alarm.class

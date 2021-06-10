@@ -19,6 +19,7 @@ public class PorukaZaAlarm implements Serializable{
     
     /*
     1 - navij alarm za vreme uneseno u obliku dd-MM-yyyy HH:mm
+    2 - navij periodicni alarm
     */
 
     public PorukaZaAlarm(int idPoruka, String zeljenoVreme, int periodaUMinutima, int idPesmeZaZvonjenje) {

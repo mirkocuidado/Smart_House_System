@@ -1,4 +1,6 @@
 C:\NetBeans\NetBeans-12.2\Projekti\KorisnickiServis\src\main\java\util\ElemForListOfSongs.java
+C:\NetBeans\NetBeans-12.2\Projekti\KorisnickiServis\src\main\java\endpoints\AlarmEndpoint.java
+C:\NetBeans\NetBeans-12.2\Projekti\KorisnickiServis\src\main\java\entities\Alarm.java
 C:\NetBeans\NetBeans-12.2\Projekti\KorisnickiServis\src\main\java\entities\User.java
 C:\NetBeans\NetBeans-12.2\Projekti\KorisnickiServis\src\main\java\util\PorukaZaPesmu.java
 C:\NetBeans\NetBeans-12.2\Projekti\KorisnickiServis\src\main\java\endpoints\PesmeEndpoint.java
@@ -6,3 +8,4 @@ C:\NetBeans\NetBeans-12.2\Projekti\KorisnickiServis\src\main\java\com\mycompany\
 C:\NetBeans\NetBeans-12.2\Projekti\KorisnickiServis\src\main\java\entities\Istorija.java
 C:\NetBeans\NetBeans-12.2\Projekti\KorisnickiServis\src\main\java\com\mycompany\korisnickiservis\JAXRSConfiguration.java
 C:\NetBeans\NetBeans-12.2\Projekti\KorisnickiServis\src\main\java\entities\Pesma.java
+C:\NetBeans\NetBeans-12.2\Projekti\KorisnickiServis\src\main\java\util\PorukaZaAlarm.java

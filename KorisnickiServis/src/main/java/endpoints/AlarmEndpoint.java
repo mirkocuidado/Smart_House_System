@@ -81,4 +81,53 @@ public class AlarmEndpoint {
         return Response.status(200).entity(uspeh).build();
     }
     
+    @GET
+    @Path("periodicni/{vreme}/{idZvono}/{perioda}")
+    public Response navijPeriodicniAlarm(@PathParam("vreme") String vreme, @PathParam("idZvono") String idZvono, @PathParam("perioda") String perioda) throws IOException {
+        int idPesma = Integer.parseInt(idZvono);
+        int period = Integer.parseInt(perioda);
+        
+        String uspeh = "";
+        
+        try {
+            PorukaZaAlarm pza = new PorukaZaAlarm(2, vreme, period, idPesma);
+            ObjectMessage objMsg = context.createObjectMessage(pza);
+            producer.send(queueServisAlarm, objMsg);
+            
+            ObjectMessage objMsg2 = (ObjectMessage)consumer.receive();
+            PorukaZaAlarm pza2 = (PorukaZaAlarm) objMsg2.getObject();
+            
+            uspeh = pza2.getZeljenoVreme();
+            
+        }
+        catch (JMSException ex) {
+            Logger.getLogger(PesmeEndpoint.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return Response.status(200).entity(uspeh).build();
+    }
+
+    @GET
+    @Path("obrisi/{idAlarm}")
+    public Response obrisiAlarm(@PathParam("idAlarm") String idAlarm) {
+        int idAlarma = Integer.parseInt(idAlarm);
+        
+        String uspeh = "";
+        
+        try {
+            PorukaZaAlarm pza = new PorukaZaAlarm(3, "", idAlarma, idAlarma);
+            ObjectMessage objMsg = context.createObjectMessage(pza);
+            producer.send(queueServisAlarm, objMsg);
+            
+            ObjectMessage objMsg2 = (ObjectMessage)consumer.receive();
+            PorukaZaAlarm pza2 = (PorukaZaAlarm) objMsg2.getObject();
+            
+            uspeh = pza2.getZeljenoVreme();
+            
+        }
+        catch (JMSException ex) {
+            Logger.getLogger(PesmeEndpoint.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return Response.status(200).entity(uspeh).build();
+    }
+
 }

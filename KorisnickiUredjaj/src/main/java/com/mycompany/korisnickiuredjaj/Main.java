@@ -12,6 +12,12 @@ import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
 import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -65,10 +71,10 @@ public class Main {
             String vreme = "";
             
             while(true) {
-                System.out.println("Unesite vreme u formatu dd-MM-yyyyHH:mm.");
+                System.out.println("Unesite vreme u formatu dd-MM-yyyy HH:mm.");
                 vreme = reader.readLine();
                 
-                if(!vreme.matches("\\d{2}-\\d{2}-\\d{4}\\d{2}:\\d{2}")) {
+                if(!vreme.matches("\\d{2}-\\d{2}-\\d{4} \\d{2}:\\d{2}")) {
                     System.out.println("Neodgovarajuci format za vreme! Pazi da HH treba da bude spojeno sa yyyy!");
                     break;
                 }
@@ -103,6 +109,9 @@ public class Main {
                         + "2) Unesite ID pesme koju zelite da pustite. \n"
                         + "3) Izlistajte istoriju pustanja pesama. \n"
                         + "4) Navijte alarm u zeljeno vreme i za zeljeni zvuk. \n"
+                        + "5) Navijte periodicni alarm sa odredjenom periodom i zeljenim zvukom. \n"
+                        + "6) Obrisi alarm. \n"
+                        + "7) Navij alarm za neko od ponudjenih vremena. \n"
                 );
 
                 choice = sc.nextInt();
@@ -127,6 +136,7 @@ public class Main {
                     
                     case 4: {
                         String vreme = checkInsertedTime();
+                        vreme = vreme.replaceAll(" ", "");
                         if(vreme.length() == 0) {
                             doThis = false;
                             break;
@@ -138,6 +148,90 @@ public class Main {
                         break;
                     }
 
+                    case 5: {
+                        String vreme = checkInsertedTime();
+                        vreme = vreme.replaceAll(" ", "");
+                        if(vreme.length() == 0) {
+                            doThis = false;
+                            break;
+                        }
+                        System.out.println("Unesite ID zeljene pesme.");
+                        int idPesme = sc.nextInt();
+                        System.out.println("Unesite oznaku za mernu jedinicu periode. 1 - minut. 2 - sat. 3 - dan.");
+                        int mera = sc.nextInt();
+                        System.out.println("Unesite periodu.");
+                        int perioda = sc.nextInt();
+                        
+                        int brojMinuta = 0;
+                        
+                        switch(mera) {
+                            case 1: {
+                                brojMinuta = perioda;
+                                break;
+                            }
+                            case 2: {
+                                brojMinuta = perioda * 60;
+                                break;
+                            }
+                            case 3: {
+                                brojMinuta = perioda * 60 * 24;
+                                break;
+                            }
+                        }
+                        
+                        request = HttpRequest.newBuilder(new URI("http://localhost:8080/KorisnickiServis/smart/alarm/periodicni/"+vreme+"/"+idPesme+"/"+brojMinuta)).GET().build();
+                        break;
+                    }
+                    
+                    case 6: {
+                        System.out.println("S obzirom da ovo nije u zahtevima, pogledaj u bazi ID alarma koji zelis da obrises i unesi ga.");
+                        int idAlarm = sc.nextInt();
+                        
+                        request = HttpRequest.newBuilder(new URI("http://localhost:8080/KorisnickiServis/smart/alarm/obrisi/"+idAlarm)).GET().build();
+                        break;
+                    }
+                    
+                    case 7: {
+                        System.out.println("Odaberite zeljeno vreme.");
+                        int ponudjenBroj = 0;
+                        int i = 0;
+                        int currentHour = Calendar.getInstance().get(Calendar.HOUR_OF_DAY);
+                        String currentDate = "" + LocalDate.now().format(DateTimeFormatter.ofPattern("dd-MM-yyyy"));
+                        
+                        List<String> listOfPotentialTimes = new ArrayList<>();
+                        
+                        for(i = currentHour + 1; i < 24; i++) {
+                            System.out.print(ponudjenBroj++ + ") ");
+                            String s = currentDate + i + ":00";
+                            listOfPotentialTimes.add(s);
+                            System.out.println(s);
+                        }
+                        
+                        currentDate = "" + LocalDate.now().plusDays(1).format(DateTimeFormatter.ofPattern("dd-MM-yyyy"));
+                        for(i = 0; i <= currentHour; i++) {
+                            System.out.print(ponudjenBroj++ + ")");
+                            String s = currentDate + " " + i + ":00";
+                            listOfPotentialTimes.add(s);
+                            System.out.println(s);
+                        }
+                        
+                        System.out.println("Odaberite vreme kada zelite da navijete alarm.");
+                        int chosen = sc.nextInt();
+                        while(chosen > 23 || chosen < 0) {
+                            System.out.println("Nedozvoljena vrednost!");
+                            chosen = sc.nextInt();
+                        }
+                        
+                        String vreme = listOfPotentialTimes.get(chosen);
+                        vreme = vreme.replaceAll(" ", "");
+                        
+                        System.out.println("Unesite ID zeljene pesme.");
+                        int idPesme = sc.nextInt();
+                        
+                        request = HttpRequest.newBuilder(new URI("http://localhost:8080/KorisnickiServis/smart/alarm/navij/"+vreme+"/"+idPesme)).GET().build();
+                        break;
+                    }
+                    
                     default: {
                         loop = false;
                         break;

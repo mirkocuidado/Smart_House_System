@@ -23,6 +23,7 @@ import javax.jms.ObjectMessage;
 import javax.jms.Queue;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.NoResultException;
 import javax.persistence.Persistence;
 import util.PorukaZaAlarm;
 import util.ThreadForAlarms;
@@ -80,7 +81,7 @@ public class Main {
                         
                         String zvono = em.find(Pesma.class, pza.getIdPesmeZaZvonjenje()).getUrl();
                         
-                        Thread threadForAlarm = new Thread(new ThreadForAlarms(difference_In_Time, zvono));
+                        Thread threadForAlarm = new Thread(new ThreadForAlarms(difference_In_Time, zvono, false, -1, date));
                         threadForAlarm.start();
                         
                         Alarm noviAlarm = new Alarm();
@@ -101,8 +102,60 @@ public class Main {
                                                 
                         break;
                     }
+                    
+                    case 2: {
+                        String vremeZvonjenja = pza.getZeljenoVreme();
+                        SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyyHH:mm");
+                        Date date = formatter.parse(vremeZvonjenja);
+                        
+                        long difference_In_Time = date.getTime() - new Date().getTime();
+                        
+                        String zvono = em.find(Pesma.class, pza.getIdPesmeZaZvonjenje()).getUrl();
+                        
+                        int perioda = pza.getPeriodaUMinutima();
+                        
+                        Thread threadForAlarm = new Thread(new ThreadForAlarms(difference_In_Time, zvono, true, perioda, date));
+                        threadForAlarm.start();
+                        
+                        Alarm noviAlarm = new Alarm();
+                        noviAlarm.setVreme(date);
+                        noviAlarm.setZvuk(pza.getIdPesmeZaZvonjenje());
+                        noviAlarm.setPerioda(perioda);
+                        noviAlarm.setPeriodican(1);
+                        
+                        em.getTransaction().begin();
+                        em.persist(noviAlarm);
+                        em.getTransaction().commit();
+                        
+                        PorukaZaAlarm pza2 = new PorukaZaAlarm(-1, "Uspesno navijen periodicni alarm!", 1, 1);
+                        
+                        ObjectMessage objMsg = context.createObjectMessage(pza2);
 
+                        producer.send(queueAlarmServis, objMsg);
+                        break;
+                    }
 
+                    case 3: {
+                        int idAlarm = pza.getPeriodaUMinutima();
+                        try {
+                            Alarm josUBaziAlarm = em.createNamedQuery("Alarm.findById", Alarm.class).setParameter("id", idAlarm).getSingleResult();
+                        
+                            em.getTransaction().begin();
+                            em.remove(josUBaziAlarm);
+                            em.getTransaction().commit();
+                        }
+                        catch(NoResultException e) {
+                            System.out.println("Vec obrisan!");
+                        }
+                        
+                        PorukaZaAlarm pza2 = new PorukaZaAlarm(-1, "Uspesno obrisan alarm!", 1, 1);
+                        
+                        ObjectMessage objMsg = context.createObjectMessage(pza2);
+
+                        producer.send(queueAlarmServis, objMsg);
+                        
+                        break;
+                    }
                     default: {
                         System.out.println("UNREACHABLE CODE!");
                     }
