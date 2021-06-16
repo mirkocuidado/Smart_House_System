@@ -88,6 +88,21 @@ public class Main {
         return "";
     }
     
+    private static String readString() {
+        try {
+            BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+            
+            String obaveza = reader.readLine();
+            
+            return obaveza;
+            
+        } catch (IOException ex) {
+            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return "";
+    }
+    
+    
     public static void main(String [] args) {
         try {
             Scanner sc= new Scanner(System.in);
@@ -112,6 +127,13 @@ public class Main {
                         + "5) Navijte periodicni alarm sa odredjenom periodom i zeljenim zvukom. \n"
                         + "6) Obrisi alarm. \n"
                         + "7) Navij alarm za neko od ponudjenih vremena. \n"
+                        + "8) Dodajte novu obavezu. \n"
+                        + "9) Izlistajte sve Vase obaveze. \n"
+                        + "10) Obrisite neku od Vasih obaveza. \n"
+                        + "11) Izmenite naziv Vase obaveze. \n"
+                        + "12) Izmenite vreme Vase obaveze. \n"
+                        + "13) Izmenite lokaciju Vase obaveze. \n"
+                        + "14) Izmenite trajanje Vase obaveze. \n"
                 );
 
                 choice = sc.nextInt();
@@ -229,6 +251,129 @@ public class Main {
                         int idPesme = sc.nextInt();
                         
                         request = HttpRequest.newBuilder(new URI("http://localhost:8080/KorisnickiServis/smart/alarm/navij/"+vreme+"/"+idPesme)).GET().build();
+                        break;
+                    }
+                    
+                    case 8: {
+                        System.out.println("Unesite naziv Vase nove obaveze.");
+                        String obaveza = readString();
+                        
+                        String vreme = checkInsertedTime();
+                        vreme = vreme.replaceAll(" ", "");
+
+                        System.out.println("Unesite oznaku za mernu jedinicu trajanja obaveze. 1 - minut. 2 - sat. 3 - dan.");
+                        int mera = sc.nextInt();
+                        System.out.println("Unesite trajanje.");
+                        int perioda = sc.nextInt();
+                        
+                        int brojMinuta = 0;
+                        
+                        switch(mera) {
+                            case 1: {
+                                brojMinuta = perioda;
+                                break;
+                            }
+                            case 2: {
+                                brojMinuta = perioda * 60;
+                                break;
+                            }
+                            case 3: {
+                                brojMinuta = perioda * 60 * 24;
+                                break;
+                            }
+                        }
+                        
+                        boolean imaLokaciju = false;
+                        System.out.println("Ukoliko Vasa obaveza nije kod Vas kuci, unesite lokaciju obaveze.");
+                        String lokacija = readString();
+                        if(lokacija.length() != 0) {
+                            imaLokaciju = true;
+                        }
+                        
+                        if(imaLokaciju) {
+                            request = HttpRequest.newBuilder(new URI("http://localhost:8080/KorisnickiServis/smart/planer/dodajSaLokacijom/"+username+"/"+obaveza+"/"+vreme+"/"+lokacija+"/"+brojMinuta)).GET().build();
+                        }
+                        else {
+                            request = HttpRequest.newBuilder(new URI("http://localhost:8080/KorisnickiServis/smart/planer/dodajBezLokacije/"+username+"/"+obaveza+"/"+vreme+"/"+brojMinuta)).GET().build();
+                        }
+                        
+                        break;
+                    }
+                    
+                    case 9: {
+                        request = HttpRequest.newBuilder(new URI("http://localhost:8080/KorisnickiServis/smart/planer/izlistaj/"+username)).GET().build();
+                        break;
+                    }
+                    
+                    case 10: {
+                        System.out.println("Unesite ID obaveze koju zelite da obrisete.");
+                        int idObaveza = sc.nextInt();
+                        
+                        request = HttpRequest.newBuilder(new URI("http://localhost:8080/KorisnickiServis/smart/planer/obrisi/"+idObaveza)).GET().build();
+                        break;
+                    }
+                    
+                    case 11: { // naziv
+                        System.out.println("Unesite ID obaveze kojoj zelite da izmenite naziv.");
+                        int idObaveza = sc.nextInt();
+                        
+                        System.out.println("Unesite novi naziv za obavezu.");
+                        String noviNaziv = readString();
+                        
+                        request = HttpRequest.newBuilder(new URI("http://localhost:8080/KorisnickiServis/smart/planer/izmeniNaziv/"+idObaveza+"/"+noviNaziv)).GET().build();
+                        break;
+                    }
+                    
+                    case 12: { // vreme
+                        System.out.println("Unesite ID obaveze kojoj zelite da izmenite naziv.");
+                        int idObaveza = sc.nextInt();
+                        
+                        String novoVreme = checkInsertedTime();
+                        novoVreme = novoVreme.replaceAll(" ", "");
+                        
+                        request = HttpRequest.newBuilder(new URI("http://localhost:8080/KorisnickiServis/smart/planer/izmeniVreme/"+idObaveza+"/"+novoVreme)).GET().build();
+                        break;
+                    }
+                    
+                    case 13: { // lokaciju
+                        System.out.println("Unesite ID obaveze kojoj zelite da izmenite naziv.");
+                        int idObaveza = sc.nextInt();
+                        
+                        System.out.println("Unesite novu lokaciju za obavezu.");
+                        String novaLok = readString();
+                        
+                        request = HttpRequest.newBuilder(new URI("http://localhost:8080/KorisnickiServis/smart/planer/izmeniLokaciju/"+idObaveza+"/"+novaLok)).GET().build();
+                        break;
+                    }
+                    
+                    case 14: { // trajanje
+                        System.out.println("Unesite ID obaveze kojoj zelite da izmenite naziv.");
+                        int idObaveza = sc.nextInt();
+                     
+                        System.out.println("Unesite oznaku za mernu jedinicu trajanja obaveze. 1 - minut. 2 - sat. 3 - dan.");
+                        int mera = sc.nextInt();
+                        System.out.println("Unesite trajanje.");
+                        int perioda = sc.nextInt();
+                        
+                        int brojMinuta = 0;
+                        
+                        switch(mera) {
+                            case 1: {
+                                brojMinuta = perioda;
+                                break;
+                            }
+                            case 2: {
+                                brojMinuta = perioda * 60;
+                                break;
+                            }
+                            case 3: {
+                                brojMinuta = perioda * 60 * 24;
+                                break;
+                            }
+                        }
+                        
+                        
+                        request = HttpRequest.newBuilder(new URI("http://localhost:8080/KorisnickiServis/smart/planer/izmeniTrajanje/"+idObaveza+"/"+brojMinuta)).GET().build();
                         break;
                     }
                     
