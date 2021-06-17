@@ -91,10 +91,13 @@ public class Main {
                         List<Obaveza> listOfObaveze = tqPs.setParameter("username", username).getResultList();
                         
                         PorukaZaPlaner pzp2 = new PorukaZaPlaner(100, "", "", "", "", "");
+                        Date today = new Date();
                         
                         String listOfSongs = "";
                         
                         for(Obaveza o : listOfObaveze) {
+                            if(o.getKada().before(today)) continue;
+                            
                             listOfSongs = listOfSongs + " " + o.getId() + ") " + o.getNaziv() + " - " + o.getLokacija() + ", od " + o.getKada() + " do " + o.getTrajanje() + "\n"; 
                         }
                         

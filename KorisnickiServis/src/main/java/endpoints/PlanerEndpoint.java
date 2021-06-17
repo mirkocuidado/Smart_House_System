@@ -65,8 +65,11 @@ public class PlanerEndpoint {
     public Response dodajSaLokacijom(@PathParam("username") String username, @PathParam("obaveza") String obaveza, @PathParam("kada") String kada, @PathParam("lokacija") String lokacija, @PathParam("trajanje") String trajanje) throws IOException {
         String uspeh = "";
         
+        String obavezaCUT = obaveza.replaceAll("_", " ");
+        String lokacijaCUT = lokacija.replaceAll("_", " ");
+        
         try {
-            PorukaZaPlaner pzp = new PorukaZaPlaner(1, obaveza, kada, lokacija, username, trajanje);
+            PorukaZaPlaner pzp = new PorukaZaPlaner(1, obavezaCUT, kada, lokacijaCUT, username, trajanje);
             ObjectMessage objMsg = context.createObjectMessage(pzp);
             producer.send(queueServisAlarm, objMsg);
             
@@ -87,8 +90,10 @@ public class PlanerEndpoint {
     public Response dodajBezLokacije(@PathParam("username") String username, @PathParam("obaveza") String obaveza, @PathParam("kada") String kada, @PathParam("trajanje") String trajanje) throws IOException {
         String uspeh = "";
         
+        String obavezaCUT = obaveza.replaceAll("_", " ");
+        
         try {
-            PorukaZaPlaner pzp = new PorukaZaPlaner(2, obaveza, kada, "", username, trajanje);
+            PorukaZaPlaner pzp = new PorukaZaPlaner(2, obavezaCUT, kada, "", username, trajanje);
             ObjectMessage objMsg = context.createObjectMessage(pzp);
             producer.send(queueServisAlarm, objMsg);
             
@@ -153,8 +158,10 @@ public class PlanerEndpoint {
     public Response izmeniNazivObaveze (@PathParam("idObaveza") String idObaveza, @PathParam("noviNaziv") String noviNaziv) throws IOException {
         String uspeh = "";
         
+        String noviNazivCUT = noviNaziv.replaceAll("_", " ");
+        
         try {
-            PorukaZaPlaner pzp = new PorukaZaPlaner(4, noviNaziv, idObaveza, "", "", "");
+            PorukaZaPlaner pzp = new PorukaZaPlaner(4, noviNazivCUT, idObaveza, "", "", "");
             ObjectMessage objMsg = context.createObjectMessage(pzp);
             producer.send(queueServisAlarm, objMsg);
             
@@ -197,8 +204,10 @@ public class PlanerEndpoint {
     public Response izmeniLokacijuObaveze (@PathParam("idObaveza") String idObaveza, @PathParam("novaLokacija") String novaLokacija) throws IOException {
         String uspeh = "";
         
+        String novaLokacijaCUT = novaLokacija.replaceAll("_", " ");
+        
         try {
-            PorukaZaPlaner pzp = new PorukaZaPlaner(6, novaLokacija, idObaveza, "", "", "");
+            PorukaZaPlaner pzp = new PorukaZaPlaner(6, novaLokacijaCUT, idObaveza, "", "", "");
             ObjectMessage objMsg = context.createObjectMessage(pzp);
             producer.send(queueServisAlarm, objMsg);
             

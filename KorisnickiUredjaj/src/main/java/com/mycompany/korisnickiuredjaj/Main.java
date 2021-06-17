@@ -257,6 +257,7 @@ public class Main {
                     case 8: {
                         System.out.println("Unesite naziv Vase nove obaveze.");
                         String obaveza = readString();
+                        obaveza = obaveza.replaceAll(" ", "_");
                         
                         String vreme = checkInsertedTime();
                         vreme = vreme.replaceAll(" ", "");
@@ -286,6 +287,7 @@ public class Main {
                         boolean imaLokaciju = false;
                         System.out.println("Ukoliko Vasa obaveza nije kod Vas kuci, unesite lokaciju obaveze.");
                         String lokacija = readString();
+                        lokacija = lokacija.replaceAll(" ", "_");
                         if(lokacija.length() != 0) {
                             imaLokaciju = true;
                         }
@@ -319,6 +321,7 @@ public class Main {
                         
                         System.out.println("Unesite novi naziv za obavezu.");
                         String noviNaziv = readString();
+                        noviNaziv = noviNaziv.replaceAll(" ", "_");
                         
                         request = HttpRequest.newBuilder(new URI("http://localhost:8080/KorisnickiServis/smart/planer/izmeniNaziv/"+idObaveza+"/"+noviNaziv)).GET().build();
                         break;
@@ -341,7 +344,7 @@ public class Main {
                         
                         System.out.println("Unesite novu lokaciju za obavezu.");
                         String novaLok = readString();
-                        
+                        novaLok = novaLok.replaceAll(" ", "_");
                         request = HttpRequest.newBuilder(new URI("http://localhost:8080/KorisnickiServis/smart/planer/izmeniLokaciju/"+idObaveza+"/"+novaLok)).GET().build();
                         break;
                     }

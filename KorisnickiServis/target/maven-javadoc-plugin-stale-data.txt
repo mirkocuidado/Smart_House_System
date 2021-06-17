@@ -36,28 +36,31 @@ util
 'C:/NetBeans/NetBeans-12.2/Projekti/KorisnickiServis/src/main/java/com/mycompany/korisnickiservis/resources/JavaEE8Resource.java'
 'C:/NetBeans/NetBeans-12.2/Projekti/KorisnickiServis/src/main/java/endpoints/AlarmEndpoint.java'
 'C:/NetBeans/NetBeans-12.2/Projekti/KorisnickiServis/src/main/java/endpoints/PesmeEndpoint.java'
+'C:/NetBeans/NetBeans-12.2/Projekti/KorisnickiServis/src/main/java/endpoints/PlanerEndpoint.java'
 'C:/NetBeans/NetBeans-12.2/Projekti/KorisnickiServis/src/main/java/entities/Alarm.java'
 'C:/NetBeans/NetBeans-12.2/Projekti/KorisnickiServis/src/main/java/entities/Istorija.java'
+'C:/NetBeans/NetBeans-12.2/Projekti/KorisnickiServis/src/main/java/entities/Obaveza.java'
 'C:/NetBeans/NetBeans-12.2/Projekti/KorisnickiServis/src/main/java/entities/Pesma.java'
 'C:/NetBeans/NetBeans-12.2/Projekti/KorisnickiServis/src/main/java/entities/User.java'
 'C:/NetBeans/NetBeans-12.2/Projekti/KorisnickiServis/src/main/java/util/ElemForListOfSongs.java'
 'C:/NetBeans/NetBeans-12.2/Projekti/KorisnickiServis/src/main/java/util/PorukaZaAlarm.java'
 'C:/NetBeans/NetBeans-12.2/Projekti/KorisnickiServis/src/main/java/util/PorukaZaPesmu.java'
+'C:/NetBeans/NetBeans-12.2/Projekti/KorisnickiServis/src/main/java/util/PorukaZaPlaner.java'
 C:\Users\38164\.m2\repository\javax\javaee-api\8.0\javaee-api-8.0.jar = 1621330167885
 C:\Users\38164\.m2\repository\com\sun\mail\javax.mail\1.6.0\javax.mail-1.6.0.jar = 1621330167232
 C:\Users\38164\.m2\repository\javax\activation\activation\1.1\activation-1.1.jar = 1621330167115
 C:\NetBeans\NetBeans-12.2\Projekti\KorisnickiServis\src\main\java = 1622650720215
-C:\NetBeans\NetBeans-12.2\Projekti\KorisnickiServis\target\apidocs\allclasses-frame.html = 1623857292613
-C:\NetBeans\NetBeans-12.2\Projekti\KorisnickiServis\target\apidocs\allclasses-noframe.html = 1623857292613
-C:\NetBeans\NetBeans-12.2\Projekti\KorisnickiServis\target\apidocs\constant-values.html = 1623857292490
-C:\NetBeans\NetBeans-12.2\Projekti\KorisnickiServis\target\apidocs\deprecated-list.html = 1623857292613
-C:\NetBeans\NetBeans-12.2\Projekti\KorisnickiServis\target\apidocs\help-doc.html = 1623857292613
-C:\NetBeans\NetBeans-12.2\Projekti\KorisnickiServis\target\apidocs\index-all.html = 1623857292606
-C:\NetBeans\NetBeans-12.2\Projekti\KorisnickiServis\target\apidocs\index.html = 1623857292613
-C:\NetBeans\NetBeans-12.2\Projekti\KorisnickiServis\target\apidocs\overview-frame.html = 1623857292443
-C:\NetBeans\NetBeans-12.2\Projekti\KorisnickiServis\target\apidocs\overview-summary.html = 1623857292613
-C:\NetBeans\NetBeans-12.2\Projekti\KorisnickiServis\target\apidocs\overview-tree.html = 1623857292591
-C:\NetBeans\NetBeans-12.2\Projekti\KorisnickiServis\target\apidocs\package-list = 1623857292443
-C:\NetBeans\NetBeans-12.2\Projekti\KorisnickiServis\target\apidocs\script.js = 1623857292628
-C:\NetBeans\NetBeans-12.2\Projekti\KorisnickiServis\target\apidocs\serialized-form.html = 1623857292512
-C:\NetBeans\NetBeans-12.2\Projekti\KorisnickiServis\target\apidocs\stylesheet.css = 1623857292628
+C:\NetBeans\NetBeans-12.2\Projekti\KorisnickiServis\target\apidocs\allclasses-frame.html = 1623955341189
+C:\NetBeans\NetBeans-12.2\Projekti\KorisnickiServis\target\apidocs\allclasses-noframe.html = 1623955341192
+C:\NetBeans\NetBeans-12.2\Projekti\KorisnickiServis\target\apidocs\constant-values.html = 1623955340940
+C:\NetBeans\NetBeans-12.2\Projekti\KorisnickiServis\target\apidocs\deprecated-list.html = 1623955341184
+C:\NetBeans\NetBeans-12.2\Projekti\KorisnickiServis\target\apidocs\help-doc.html = 1623955341207
+C:\NetBeans\NetBeans-12.2\Projekti\KorisnickiServis\target\apidocs\index-all.html = 1623955341175
+C:\NetBeans\NetBeans-12.2\Projekti\KorisnickiServis\target\apidocs\index.html = 1623955341197
+C:\NetBeans\NetBeans-12.2\Projekti\KorisnickiServis\target\apidocs\overview-frame.html = 1623955340854
+C:\NetBeans\NetBeans-12.2\Projekti\KorisnickiServis\target\apidocs\overview-summary.html = 1623955341202
+C:\NetBeans\NetBeans-12.2\Projekti\KorisnickiServis\target\apidocs\overview-tree.html = 1623955341138
+C:\NetBeans\NetBeans-12.2\Projekti\KorisnickiServis\target\apidocs\package-list = 1623955340847
+C:\NetBeans\NetBeans-12.2\Projekti\KorisnickiServis\target\apidocs\script.js = 1623955341213
+C:\NetBeans\NetBeans-12.2\Projekti\KorisnickiServis\target\apidocs\serialized-form.html = 1623955340974
+C:\NetBeans\NetBeans-12.2\Projekti\KorisnickiServis\target\apidocs\stylesheet.css = 1623955341211
